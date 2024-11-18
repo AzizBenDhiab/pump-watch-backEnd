@@ -34,7 +34,6 @@ export class UserEntity extends TimestampEntity {
 
   @Column({
     nullable: false,
-    unique: true,
   })
   salt: string;
 

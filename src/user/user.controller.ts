@@ -25,7 +25,7 @@ import { User } from 'src/decorators/user.decorator';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-  @Get('/auth')
+  @Get('auth')
   async finduser(@User() user): Promise<UserEntity> {
     return this.userService.findOne(user.id);
   }

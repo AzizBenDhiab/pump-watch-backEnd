@@ -21,6 +21,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
+    //private companyService: CompanyService,
   ) {}
 
   async findAll(): Promise<UserEntity[]> {
@@ -49,8 +50,8 @@ export class UserService {
     await this.userRepository.delete(id);
   }
 
-  async signup(user: Partial<UserEntity>): Promise<void> {
-    const email = user.email;
+  async register(userData: UserSubscribeDto): Promise<Partial<UserEntity>> {
+    const email = userData.email;
     const userWithEmail = await this.userRepository
       .createQueryBuilder('user')
       .where('user.email=:email', { email })
@@ -58,20 +59,20 @@ export class UserService {
     if (userWithEmail) {
       throw new NotFoundException('Email already exists.');
     }
+    const user = new UserEntity();
+    user.firstName = userData.firstName;
+    user.lastName = userData.lastName;
+    user.email = userData.email;
     user.salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, user.salt);
+    user.password = await bcrypt.hash(userData.password, user.salt);
+    //await this.companyService.findOne();
 
     try {
+      console.log(user);
       await this.userRepository.save(user);
     } catch (e) {
       throw new ConflictException('Combinaison doit être unique');
     }
-  }
-
-  async register(userData: UserSubscribeDto): Promise<Partial<UserEntity>> {
-    const user = this.userRepository.create({ ...userData });
-
-    await this.signup(user);
     return {
       id: user.id,
       firstName: user.firstName,

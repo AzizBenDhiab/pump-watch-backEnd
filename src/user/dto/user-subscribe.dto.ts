@@ -14,4 +14,7 @@ export class UserSubscribeDto {
 
   @IsNotEmpty()
   password: string;
+
+  @IsNotEmpty()
+  companyId: number;
 }
