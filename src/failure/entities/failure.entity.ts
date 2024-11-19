@@ -18,6 +18,11 @@ export class FailureEntity extends TimestampEntity {
   })
   Type: string;
 
+  @Column({
+    nullable: false,
+  })
+  Date: Date;
+
   @ManyToOne(() => PumpEntity, { eager: true, nullable: false })
   pump: PumpEntity;
 }

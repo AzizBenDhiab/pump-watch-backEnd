@@ -4,6 +4,7 @@ import { PumpModule } from 'src/pump/pump.module';
 import { UserModule } from '../user/user.module';
 import { CompanyController } from './company.controller';
 import { CompanyEntity } from './entities/company.entity';
+import { CompanyService } from './company.service';
 
 @Module({
   imports: [
@@ -11,8 +12,8 @@ import { CompanyEntity } from './entities/company.entity';
     forwardRef(() => UserModule),
     forwardRef(() => PumpModule),
   ],
-  controllers: [CompanyController,],
-  providers: [],
-  exports: [],
+  controllers: [CompanyController],
+  providers: [CompanyService],
+  exports: [CompanyService],
 })
-export class CompanyModule { }
+export class CompanyModule {}

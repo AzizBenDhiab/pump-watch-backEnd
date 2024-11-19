@@ -36,6 +36,8 @@ export class ConversationService {
     createConversationDto: CreateConversationDto,
     user: UserEntity,
   ): Promise<ConversationEntity> {
+    console.log(user);
+
     const conversation = new ConversationEntity();
     conversation.user = user;
     conversation.title = createConversationDto.title;

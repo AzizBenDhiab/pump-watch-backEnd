@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginCredentialsDto } from './dto/LoginCredentials.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { CompanyService } from 'src/company/company.service';
 
 @Injectable()
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
-    //private companyService: CompanyService,
+    private companyService: CompanyService,
   ) {}
 
   async findAll(): Promise<UserEntity[]> {
@@ -65,7 +66,7 @@ export class UserService {
     user.email = userData.email;
     user.salt = await bcrypt.genSalt();
     user.password = await bcrypt.hash(userData.password, user.salt);
-    //await this.companyService.findOne();
+    user.company = await this.companyService.findOne(userData.companyId);
 
     try {
       console.log(user);

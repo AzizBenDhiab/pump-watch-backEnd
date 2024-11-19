@@ -5,16 +5,21 @@ import { CreateFailureDto } from './dto/create-failure.dto';
 import { UpdateFailureDto } from './dto/update-failure.dto';
 import { FailureEntity } from './entities/failure.entity';
 import { PumpEntity } from 'src/pump/entities/pump.entity';
+import { PumpService } from '../pump/pump.service';
 
 @Injectable()
 export class FailureService {
   constructor(
     @InjectRepository(FailureEntity)
     private readonly failureRepository: Repository<FailureEntity>,
+    private readonly pumpService: PumpService,
   ) {}
 
   async create(createFailureDto: CreateFailureDto): Promise<FailureEntity> {
-    const failure = this.failureRepository.create(createFailureDto);
+    const failure = new FailureEntity();
+    failure.Type = createFailureDto.Type;
+    failure.pump = await this.pumpService.findOne(createFailureDto.pumpId);
+    failure.Date = createFailureDto.Date;
     return await this.failureRepository.save(failure);
   }
 
@@ -56,7 +61,6 @@ export class FailureService {
     }
   }
 
-  
   async findByPumpId(pumpId: number): Promise<FailureEntity[]> {
     const failures = await this.failureRepository.find({
       where: { pump: { id: pumpId } },

@@ -10,8 +10,8 @@ import { FailureController } from './failure.controller';
     TypeOrmModule.forFeature([FailureEntity]),
     forwardRef(() => PumpModule),
   ],
-  controllers: [FailureController,],
-  providers: [FailureService, ],
+  controllers: [FailureController],
+  providers: [FailureService],
   exports: [],
 })
-export class FailureModule { }
+export class FailureModule {}

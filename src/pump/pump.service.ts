@@ -3,16 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PumpEntity } from './entities/pump.entity';
 import { CreatePumpDto } from './dto/create-pump.dto';
+import { CompanyService } from 'src/company/company.service';
 
 @Injectable()
 export class PumpService {
   constructor(
     @InjectRepository(PumpEntity)
     private readonly pumpRepository: Repository<PumpEntity>,
+    private companyService: CompanyService,
   ) {}
 
   async create(createPumpDto: CreatePumpDto): Promise<PumpEntity> {
-    const pump = this.pumpRepository.create(createPumpDto);
+    const pump = new PumpEntity();
+    pump.Name = createPumpDto.Name;
+    pump.company = await this.companyService.findOne(createPumpDto.companyId);
     return await this.pumpRepository.save(pump);
   }
 

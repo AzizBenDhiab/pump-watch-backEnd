@@ -5,4 +5,7 @@ export class CreatePumpDto {
   @IsNotEmpty()
   @IsString()
   Name: string;
+
+  @IsNotEmpty()
+  companyId: number;
 }
