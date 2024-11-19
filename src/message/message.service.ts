@@ -13,6 +13,7 @@ import { UserService } from 'src/user/user.service';
 import { ConversationService } from 'src/conversation/conversation.service';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
+import { response } from 'express';
 @Injectable()
 export class MessageService {
   constructor(
@@ -43,6 +44,7 @@ export class MessageService {
     const chatbotResponse = await lastValueFrom(
       this.httpService.post(
         'http://127.0.0.1:5000/chatbot',
+
         {
           query: createMessageDto.text, // Updated body structure
         },
@@ -53,13 +55,13 @@ export class MessageService {
         },
       ),
     );
-
+    console.log(chatbotResponse.data);
     // Create bot message
     const botMessage = new MessageEntity();
-    botMessage.text = chatbotResponse.data?.responseText || 'Default bot reply';
+    console.log(chatbotResponse.data?.response);
+    botMessage.text = chatbotResponse.data?.response || 'Bot under maintenance';
     botMessage.user = await this.userService.findOne(2);
     botMessage.conversation = userMessage.conversation;
-
     const savedBotMessage = await this.messageRepository.save(botMessage);
 
     // Return both messages

@@ -36,6 +36,12 @@ export class MessageController {
     return this.messageService.findOne(+id);
   }
 
+  @Get('/byconv/:id')
+  @UseGuards(JwtAuthGuard)
+  findByConv(@Param('id') id: string) {
+    return this.messageService.getMessagesByConversationId(+id);
+  }
+
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   softDelete(@Param('id') id: string) {
