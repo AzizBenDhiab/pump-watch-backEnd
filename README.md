@@ -1,73 +1,116 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Here is a `README.md` file for the `pumpwatch-backend` project, including instructions for setting up the database and configuring the environment variables.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+```markdown
+# PumpWatch Backend
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is the backend for the PumpWatch project built with NestJS. It connects to a MySQL database and uses environment variables to configure the database connection and other settings.
 
-## Description
+## Requirements
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js (LTS version)
+- MySQL (installed locally or on a remote server)
+- NestJS CLI (optional, but recommended)
 
-## Installation
+## Setup
+
+### 1. Clone the repository
+
+Clone the `pumpwatch-backend` repository to your local machine:
 
 ```bash
-$ npm install
+git clone https://github.com/yourusername/pumpwatch-backend.git
+cd pumpwatch-backend
 ```
 
-## Running the app
+### 2. Install dependencies
+
+Run the following command to install all necessary dependencies:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Test
+### 3. Create the MySQL database
+
+Before running the backend, you need to create a MySQL database named `pump_watch`.
+
+1. Log in to your MySQL server:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+mysql -u root -p
 ```
 
-## Support
+2. Create the `pump_watch` database:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```sql
+CREATE DATABASE pump_watch;
+```
 
-## Stay in touch
+3. Exit MySQL:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```sql
+EXIT;
+```
 
-## License
+### 4. Configure environment variables
 
-Nest is [MIT licensed](LICENSE).
+Create a `.env` file in the root of the project and add the following database and secret configuration:
+
+```env
+DB_HOST="your_host"
+DB_TYPE=mysql
+DB_PORT=3306
+DB_USERNAME="your_own_user"
+DB_PASSWORD="your own password"
+DB_NAME=pump_watch
+SECRET=
+```
+
+- `DB_HOST`: The database host (usually `localhost` for local development).
+- `DB_TYPE`: The type of database being used (MySQL in this case).
+- `DB_PORT`: The port the MySQL database is running on (default `3306`).
+- `DB_USERNAME`: The username to connect to the database.
+- `DB_PASSWORD`: The password for the MySQL user.
+- `DB_NAME`: The name of the database to use (`pump_watch`).
+- `SECRET`: A secret key used for JWT or other cryptographic operations.
+
+### 5. Run database migrations (optional)
+
+If your project includes database migrations, you can run them using:
+
+```bash
+npm run migration:run
+```
+
+Make sure that your `ormconfig.json` or `TypeORM` setup is configured correctly.
+
+### 6. Start the backend server
+
+Now, you can start the backend server on your local machine:
+
+```bash
+npm start
+```
+
+The backend should now be running on `http://localhost:3000`.
+
+### 7. Verify the database connection
+
+Once the server is running, the backend will connect to the `pump_watch` database. You can check the logs to ensure the database connection was successful.
+
+## API Documentation
+
+To get more details about the available endpoints, refer to the [API Documentation](./docs/api.md).
+
+## Troubleshooting
+
+- If you encounter any issues with database connectivity, ensure that MySQL is running and the provided credentials in the `.env` file are correct.
+- Check for any error messages in the terminal or log files for more details.
+```
+
+### Additional Notes:
+
+- Ensure that you have MySQL installed and running on your machine or a remote host.
+- The `.env` file should not be committed to the repository. Make sure to add it to `.gitignore` to avoid accidental commits.
+
+Let me know if you need further adjustments!
