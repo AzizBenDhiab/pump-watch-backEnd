@@ -1,5 +1,3 @@
-Here is a `README.md` file for the `pumpwatch-backend` project, including instructions for setting up the database and configuring the environment variables.
-
 ```markdown
 # PumpWatch Backend
 
