@@ -24,7 +24,7 @@ export class FailureController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   findAll() {
     return this.failureService.findAll();
   }

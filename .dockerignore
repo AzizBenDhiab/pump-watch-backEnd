@@ -1,0 +1,31 @@
+# Ignore node modules and dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Ignore local environment configuration
+.env
+.env.local
+.env.development
+.env.production
+
+# Ignore logs
+*.log
+logs
+logs/*
+debug.log
+
+# Ignore editor and OS-specific files
+.vscode
+.idea
+.DS_Store
+*.swp
+Thumbs.db
+
+# Ignore build artifacts
+dist
+build
+.cache
+.next
+coverage

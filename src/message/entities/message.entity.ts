@@ -25,6 +25,6 @@ export class MessageEntity extends TimestampEntity {
   conversation: ConversationEntity;
 
   @Column()
-  @Column({ type: 'text' }) // Change from 'varchar' to 'text'
+  @Column({ type: 'text' })
   text: string;
 }

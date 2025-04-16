@@ -11,6 +11,8 @@ async function bootstrap() {
     origin: (origin, callback) => callback(null, origin),
     credentials: true,
   });
-  await app.listen(3000);
+  // Set the global prefix to /api
+  app.setGlobalPrefix('api');
+  await app.listen(3000, '0.0.0.0');
 }
 bootstrap();
